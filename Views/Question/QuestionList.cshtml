@@ -1,0 +1,288 @@
+﻿@*@model System.Data.DataTable
+@using System.Data
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Question List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item">Question</li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+                    <span class="text-danger">@TempData["ErrorMessage"]</span>
+                    <span class="text-danger">@TempData["SuccessMessage"]</span>
+
+    <!-- Search Question -->
+    <form>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search</h5>
+                <div class="row mt-3">
+                    <div class="col-sm-4"> 
+                         <label>Select Question Level</label>
+                        <select class="form-control" id="InputQuestionLevel">
+                            <option selected disabled>Select Level</option>
+                            <option>Hard</option>
+                            <option>Medium</option>
+                            <option>Easy</option>
+                        <select>
+                     </div>
+                    <div class="col-sm-4">
+                        <label>Question</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Question">
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Min Marks</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Min Marks">
+                    </div>
+                    <div class="col-sm-4 mt-2">
+                        <label>Max Marks</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Max Marks">
+                    </div>
+                    <div>
+                        <button class="btn btn-success mt-3">Search</button>
+                        <button class="btn btn-danger mt-3">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+                <div class="card">
+                    <div class="card-body">
+                            <h5 class="card-title">Question List</h5> 
+                        <div class="d-flex justify-content-end">
+                            <a asp-controller="Question" asp-action="QuestionAdd">
+                                <button class="btn btn-primary mb-2">Add Question</button>
+                            </a>
+                            <a asp-controller="Question" asp-action="ExportToExcel">
+                                <button class="btn btn-outline-success mb-2 ms-1">Export to Excel</button>
+                            </a>
+                        </div>
+
+                        <!-- Table with stripped rows -->
+                        <div class="row mb-3">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>QuestionID</th>
+                                                <th>QuestionText</th>
+                                                <th>QuestionLevel</th>
+                                                <th>OptionA</th>
+                                                <th>OptionB</th>
+                                                <th>OptionC</th>
+                                                <th>OptionD</th>
+                                                <th>CorrectOption</th>
+                                                <th>QuestionMarks</th>
+                                                <th>IsActive</th>
+                                                <th>UserName</th>
+                                                <th data-type="date" data-format="YYYY/DD/MM">Created</th>
+                                                <th data-type="date" data-format="YYYY/DD/MM">Modified</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (System.Data.DataRow row in Model.Rows)
+                                            {
+                                                <tr>
+                                                    <td>@row["QuestionID"]</td>
+                                                    <td>@row["QuestionText"]</td>
+                                                    <td>@row["QuestionLevel"]</td>
+                                                    <td>@row["OptionA"]</td>
+                                                    <td>@row["OptionB"]</td>
+                                                    <td>@row["OptionC"]</td>
+                                                    <td>@row["OptionD"]</td>
+                                                    <td>@row["CorrectOption"]</td>
+                                                    <td>@row["QuestionMarks"]</td>
+                                                    <td>@row["IsActive"]</td>
+                                                    <td>@row["UserName"]</td>
+                                                    <td>@row["Created"]</td>
+                                                    <td>@row["Modified"]</td>
+                                                    <td>
+                                                        <a asp-controller="Question" asp-action="QuestionAdd" asp-route-QuestionID="@row["QuestionID"]">
+                                                            <i class="bi bi-pencil-square" style="color:green"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" onclick="confirmDelete('@row["QuestionID"]')">
+                                                            <i class=" bi bi-trash3" style="color:red"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            function confirmDelete(questionID) {
+                                Swal.fire({
+                                    title: "Are you sure want to delete?",
+                                    text: "You won't be able to revert this!",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#d33",
+                                    cancelButtonColor: "#3085d6",
+                                    confirmButtonText: "Yes, delete it!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/Question/QuestionDelete?QuestionID=" + questionID;
+                                    }
+                                });
+                            }
+                        </script>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </<div>
+              </div>
+             </div>
+              </div>
+              </div>
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main --> *@
+
+
+@model System.Data.DataTable
+@using System.Data
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Question List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item">Question</li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Search Question -->
+    <form>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search</h5>
+                <div class="row mt-3">
+                    <div class="col-sm-4">
+                        <label>Select Question Level</label>
+                        <select class="form-control" id="InputQuestionLevel">
+                            <option selected disabled>Select Level</option>
+                            <option>Hard</option>
+                            <option>Medium</option>
+                            <option>Easy</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Question</label>
+                        <input type="text" class="form-control" id="inputQuestion" placeholder="Enter Question">
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Min Marks</label>
+                        <input type="text" class="form-control" id="inputMinMarks" placeholder="Enter Min Marks">
+                    </div>
+                    <div class="col-sm-4 mt-2">
+                        <label>Max Marks</label>
+                        <input type="text" class="form-control" id="inputMaxMarks" placeholder="Enter Max Marks">
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <button type="submit" class="btn btn-success">Search</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <span class="text-danger">@TempData["ErrorMessage"]</span>
+    <span class="text-danger">@TempData["SuccessMessage"]</span>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Question List</h5>
+            <div class="d-flex justify-content-end">
+                <a asp-controller="Question" asp-action="QuestionAdd" class="btn btn-primary mb-2">Add Question</a>
+                <a asp-controller="Question" asp-action="ExportToExcel" class="btn btn-outline-success mb-2 ms-1">Export to Excel</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table datatable">
+                    <thead>
+                        <tr>
+                            <th>QuestionID</th>
+                            <th>QuestionText</th>
+                            <th>QuestionLevel</th>
+                            <th>OptionA</th>
+                            <th>OptionB</th>
+                            <th>OptionC</th>
+                            <th>OptionD</th>
+                            <th>CorrectOption</th>
+                            <th>QuestionMarks</th>
+                            <th>IsActive</th>
+                            <th>UserName</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row["QuestionID"]</td>
+                                <td>@row["QuestionText"]</td>
+                                <td>@row["QuestionLevel"]</td>
+                                <td>@row["OptionA"]</td>
+                                <td>@row["OptionB"]</td>
+                                <td>@row["OptionC"]</td>
+                                <td>@row["OptionD"]</td>
+                                <td>@row["CorrectOption"]</td>
+                                <td>@row["QuestionMarks"]</td>
+                                <td>@row["IsActive"]</td>
+                                <td>@row["UserName"]</td>
+                                <td>@row["Created"]</td>
+                                <td>@row["Modified"]</td>
+                                <td>
+                                    <a asp-controller="Question" asp-action="QuestionAdd" asp-route-QuestionID="@row["QuestionID"]">
+                                        <i class="bi bi-pencil-square text-success"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" onclick="confirmDelete('@row["QuestionID"]')">
+                                        <i class="bi bi-trash3 text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(questionID) {
+        Swal.fire({
+            title: "Are you sure you want to delete?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Question/QuestionDelete?QuestionID=" + questionID;
+            }
+        });
+    }
+</script>

@@ -1,0 +1,152 @@
+﻿@model System.Data.DataTable
+@using System.Data
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Quiz List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item">Quiz</li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Search Quiz -->
+    <form>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search</h5>
+                <div class="row mb-1 mt-3">
+                    <div class="col-sm-4">
+                        <label>Quiz Name</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Quiz Name">
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Min Question</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Minimum Questions">
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Max Question</label>
+                        <input type="text" class="form-control" id="inputText" placeholder="Enter Maximum Questions">
+                    </div>
+                    <div class="col-sm-4 mt-2">
+                        <label>From Quiz Date</label>
+                        <input type="date" class="form-control" id="inputText">
+                    </div>
+                    <div class="col-sm-4 mt-2">
+                        <label>To Quiz Date</label>
+                        <input type="date" class="form-control" id="inputText">
+                    </div>
+                    <div>
+                        <button class="btn btn-success mt-3" asp-controller="Quiz" asp-action="QuizSearch">Search</button>
+                        <button class="btn btn-danger mt-3">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <span class="text-danger">@TempData["ErrorMessage"]</span>
+    <span class="text-danger">@TempData["SuccessMessage"]</span>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12"></a>
+                <div class="card">
+                    <div class="card-body">
+                    
+                        <h5 class="card-title">Quiz List</h5>
+                        <div class="d-flex justify-content-end">
+                            <a asp-controller="Quiz" asp-action="QuizAdd">
+                                <button class="btn btn-primary mb-2" >Add Quiz</button>
+                            </a>
+                            <a asp-controller="Quiz" asp-action="ExportToExcel">
+                                <button class="btn btn-outline-success mb-2 ms-1" >Export to Excel</button>
+                            </a>
+                        </div>
+                        
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>QuizID
+                                    <th>QuizName</th>
+                                    <th>TotalQuestions</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">QuizDate</th>
+                                    <th>UserName</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Created</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Modified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model.Rows)
+                                {
+                                    <tr>
+                                        <td>@row["QuizID"]</td>
+                                        <td>@row["QuizName"]</td>
+                                        <td>@row["TotalQuestions"]</td>
+                                        <td>@row["QuizDate"]</td>
+                                        <td>@row["UserName"]</td>
+                                        <td>@row["Created"]</td>
+                                        <td>@row["Modified"]</td>
+                                        <td>
+                                            <a asp-controller="Quiz" asp-action="QuizAdd" asp-route-QuizID="@row["QuizID"]">
+                                                <i class="bi bi-pencil-square" style="color:green"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" onclick="confirmDelete('@row["QuizID"]')">
+                                                <i class=" bi bi-trash3" style="color:red"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            function confirmDelete(quizID) {
+                                Swal.fire({
+                                    title: "Are you sure want to delete?",
+                                    text: "You won't be able to revert this!",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#d33",
+                                    cancelButtonColor: "#3085d6",
+                                    confirmButtonText: "Yes, delete it!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/Quiz/QuizDelete?QuizID=" + quizID;
+                                    }
+                                });
+                            }
+                        </script>
+
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            $(document).ready(function () {
+                                var successMessage = '@TempData["SuccessMessage"]';
+                                if (successMessage) {
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Success!",
+                                        text: successMessage,
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                }
+                            });
+                        </script>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

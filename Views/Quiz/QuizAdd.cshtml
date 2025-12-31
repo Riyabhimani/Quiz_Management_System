@@ -1,0 +1,55 @@
+﻿@model QuizModel
+<main class="main" id="main">
+    <div class="pagetitle">
+        <h1>Quiz Add</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item">Quiz</li>
+                <li class="breadcrumb-item active">Add/Edit</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Vertical Form -->
+    <div class="card" method="post" asp-action="Save">
+        <div class="card-body">
+            <h5 class="card-title">Quiz Add</h5>
+            <form class="row g-3">
+
+                <input type="hidden" asp-for="QuizID" />
+
+                <div class="col-12">
+                    <label for="inputQuizName" class="form-label"><span style="color:red">*</span>Quiz Name</label>
+                    <input type="text" class="form-control" id="inputQuizName" asp-for="QuizName" placeholder="Enter Quiz Name">
+                    <span asp-validation-for="QuizName" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputTotalQuestions" class="form-label"><span style="color:red">*</span>Total Questions</label>
+                    <input type="text" class="form-control" id="inputTotalQuestions" asp-for="TotalQuestions" placeholder="Enter Total Questions">
+                    <span asp-validation-for="TotalQuestions" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputQuizDate" class="form-label"><span style="color:red">*</span>Quiz Date</label>
+                    <input type="date" class="form-control" id="inputQuizDate" asp-for="QuizDate">
+                    <span asp-validation-for="QuizDate" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputUserName" class="form-label"><span style="color:red">*</span>User Name</label>
+                    <select class="form-control" asp-for="UserID" asp-items="@(new SelectList(ViewBag.UserList, "UserID", "UserName"))">
+                        <option value="">Select User</option>
+                    </select>
+                    <span asp-validation-for="UserID" asp-for="UserID" style="color:red"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" asp-controller="Quiz" asp-action="Save">Save</button>
+                    <button type="reset" class="btn btn-danger">
+                        <a asp-controller="Quiz" asp-action="QuizList" style="color:white;">Cancel</a>
+                    </button>
+                </div>
+
+            </form><!-- Vertical Form -->
+        </div>
+    </div>
+</main>

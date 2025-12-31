@@ -1,0 +1,143 @@
+﻿@model QuizManagementSystem.Models.DashboardModel
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Dashboard Cards -->
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <!-- Total Users -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card User-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Users</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <img src="~/img/User.png" alt="" height="50px" width="50px" />
+                                    </div>
+                                    <div class="ps-3">
+                                        <span class="text-danger small pt-1 fw-bold">@Model.TotalUsers</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Quizes -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card Quiz-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Quizes</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <img src="~/img/Quiz.png" alt="" height="50px" width="50px" />
+                                    </div>
+                                    <div class="ps-3">
+                                        <span class="text-danger small pt-1 fw-bold">@Model.TotalQuizes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Questions -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card Question-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Questions</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <img src="~/img/Question.jpg" alt="" height="50px" width="50px" />
+                                    </div>
+                                    <div class="ps-3">
+                                        <span class="text-danger small pt-1 fw-bold">@Model.TotalQuestions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- End Card Row -->
+
+            <!-- Recent Entries Tables -->
+            <div class="col-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Recent Users</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>User Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.RecentUsers)
+                                {
+                                    <tr>
+                                        <td>@user.UserID</td>
+                                        <td>@user.UserName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <h3 class="card-title mt-4">Recent Quizes</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Quiz ID</th>
+                                    <th>Quiz Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var quiz in Model.RecentQuizes)
+                                {
+                                    <tr>
+                                        <td>@quiz.QuizID</td>
+                                        <td>@quiz.QuizName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <h3 class="card-title mt-4">Recent Questions</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Question ID</th>
+                                    <th>Question Text</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var question in Model.RecentQuestions)
+                                {
+                                    <tr>
+                                        <td>@question.QuestionID</td>
+                                        <td>@question.QuestionText</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>

@@ -1,0 +1,106 @@
+﻿@model System.Data.DataTable
+@using System.Data
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>User List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item">User</li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <span class="text-danger">@TempData["ErrorMessage"]</span>
+    <span class="text-danger">@TempData["SuccessMessage"]</span>
+
+    <div class="d-flex justify-content-end">
+        <a asp-controller="User" asp-action="UserAdd">
+            <button class="btn btn-primary mb-2">Add User</button>
+        </a>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                         <h5 class="card-title">User List</h5>
+
+                        <!-- Table with stripped rows -->
+                        <div class="table-responsive">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>UserID
+                                    <th>UserName</th>
+                                    <th>Password</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>IsActive</th>
+                                    <th>IsAdmin</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Created</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Modified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                                <tbody>
+                                    @foreach (System.Data.DataRow row in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td>@row["UserID"]</td>
+                                            <td>@row["UserName"]</td>
+                                            <td>@row["Password"]</td>
+                                            <td>@row["Email"]</td>
+                                            <td>@row["Mobile"]</td>
+                                            <td>@row["IsActive"]</td>
+                                            <td>@row["IsAdmin"]</td>
+                                            <td>@row["Created"]</td>
+                                            <td>@row["Modified"]</td>
+                                            <td>
+                                                <a asp-controller="User" asp-action="UserAdd" asp-route-UserID="@row["UserID"]">
+                                                    <i class="bi bi-pencil-square" style="color:green"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" onclick="confirmDelete('@(row["UserID"])')">
+                                                    <i class="bi bi-trash3" style="color:red"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                        </table>
+
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                            <script>
+                                function confirmDelete(userID) {
+                                    Swal.fire({
+                                        title: "Are you sure you want to delete?",
+                                        text: "You won't be able to revert this!",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#d33",
+                                        cancelButtonColor: "#3085d6",
+                                        confirmButtonText: "Yes, delete it!"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/User/UserDelete?UserID=" + userID;
+                                        }
+                                    });
+                                }
+                            </script>
+                        </div>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

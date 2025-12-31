@@ -1,0 +1,73 @@
+﻿@model UserModel
+<main class="main" id="main">
+    <div class="pagetitle"> 
+        <h1>User Add</h1> 
+          <nav> 
+             <ol class="breadcrumb"> 
+                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                 <li class="breadcrumb-item">User</li> 
+                 <li class="breadcrumb-item active">Add/Edit</li> 
+             </ol> 
+         </nav> 
+     </div><!-- End Page Title --> 
+
+    <!-- Vertical Form -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">User Add</h5>
+            <form class="row g-3">
+
+                <input type="hidden" asp-for="UserID" />
+                
+                <div class="col-12">
+                    <label for="inputUserName" class="form-label"><span style="color:red">*</span>User Name</label>
+                    <input type="text" class="form-control" id="inputUserName" asp-for="UserName" placeholder="Enter User Name">
+                    <span asp-validation-for="UserName" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputPassword" class="form-label"><span style="color:red">*</span>Password</label>
+                    <input type="text" class="form-control" id="inputPassword" asp-for="Password" placeholder="Enter Password">
+                    <span asp-validation-for="Password" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail" class="form-label"><span style="color:red">*</span>Email</label>
+                    <input type="text" class="form-control" id="inputEmail" asp-for="Email" placeholder="Enter Email Address">
+                    <span asp-validation-for="Email" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputMobile" class="form-label"><span style="color:red">*</span>Mobile</label>
+                    <input type="text" class="form-control" id="inputMobile" asp-for="Mobile" placeholder="Enter Mobile Number">
+                    <span asp-validation-for="Mobile" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputIsActive" class="form-label">IsActive</label>
+                    <select class="form-control" id="inputIsActive" asp-for="IsActive">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                    </select>
+                    <span asp-validation-for="IsActive" style="color:red"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputIsAdmin" class="form-label">IsAdmin</label>
+                    <select class="form-control" id="inputIsAdmin" asp-for="IsAdmin">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                    </select>
+                    <span asp-validation-for="IsAdmin" style="color:red"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" asp-controller="User" asp-action="Save">Save</button>
+                    <button type="reset" class="btn btn-danger">
+                        <a asp-controller="User" asp-action="UserList" style="color:white;">Cancel</a>
+                    </button>
+                </div>
+
+            </form><!-- Vertical Form -->
+        </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script> 
